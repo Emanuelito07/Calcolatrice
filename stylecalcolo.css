@@ -1,0 +1,72 @@
+/* Titolo principale */
+#h1-inizio {
+  font-size: 33px;
+  text-align: center;
+}
+
+/* Paragrafo descrittivo */
+#paragrafo-calcolatrice {
+  font-size: 35px;
+  text-align: center;
+}
+
+/* Contenitore per i bottoni */
+div.due-bottoni {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 40px;
+}
+
+/* Stile comune per tutti i bottoni */
+button {
+  font-size: 70px;
+  color: white; /* Testo in bianco */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Bottone rotondo */
+  cursor: pointer;
+  border: none; /* Rimuove bordi inutili */
+  outline: none; /* Rimuove il contorno grigio */
+  transition: background-color 0.5s;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Centra il contenuto */
+}
+
+/* Bottoni numerici */
+.numeribottoni {
+  background-color: black; /* Colore di sfondo nero */
+}
+
+.numeribottoni:hover {
+  background-color: rgb(67, 67, 67); /* Colore di sfondo quando hover */
+}
+
+/* Bottoni delle operazioni */
+.operazione {
+  background-color: rgb(251, 151, 31); /* Colore di sfondo arancione */
+}
+
+.operazione:hover {
+  background-color: rgb(255, 170, 50); /* Colore di sfondo arancione più chiaro quando hover */
+}
+
+/* Display della calcolatrice */
+#schermo {
+  width: 590px;
+  border: none;
+  font-size: 70px;
+  padding: 5px;
+  text-align: left;
+  margin: 20px auto;
+  display: block;
+}
+
+.reset{
+  background-color: rgb(63, 63, 63);
+}
+
+.reset:hover{
+  background-color: rgb(90, 90, 90); 
+}
