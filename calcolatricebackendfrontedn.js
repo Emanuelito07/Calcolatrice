@@ -1,26 +1,33 @@
 let schermo = document.getElementById("schermo");
 
-function numeribottoni(s) {
+let finecalcolo = false;
 
+function numeribottoni(s) {
 	if (schermo.value === "Errore") {				
 		schermo.value = "";
-	}
+	};
+
+    if (finecalcolo == true) {
+        schermo.value = "";
+        finecalcolo = false;
+    }
 
 	let ultimoCarattere = schermo.value.slice(-1);
 	let operatori = ['+', '-', 'x', '÷'];           //variabile operatori
 
 	if (operatori.includes(ultimoCarattere) && operatori.includes(s)) {
 		return;
-	}
+	};
 
 	schermo.value += s;          //aggiungere numeri e operatori
 	console.log(schermo.value);
-}
+};
 
 function reset() {
-	schermo.value = "";
-	console.log('Reset completato');
-}
+        schermo.value = "";
+        finecalcolo = false;
+	    console.log('Reset completato');
+};
 
 function calcolo() {
 	let espressione = schermo.value.replace(/x/g, '*').replace(/÷/g, '/');
@@ -28,11 +35,12 @@ function calcolo() {
 	try {
 		schermo.value = eval(espressione);
 		console.log(schermo.value);
+        finecalcolo = true;
 	} catch {
 		schermo.value = "Errore";
-		console.log(shcermo.value);
-	}
-}
+		console.log(schermo.value);
+	};
+};
 /*
 let numero1 = "";
 let numero2 = "";
@@ -49,7 +57,7 @@ function numeribottoni(numero) {
         schermo.value = numero1 + " " + operatore + " " + numero2;
     }
 }
-
+				
 //funzione per aggiudicare l'operazione  
 function operazione(simboli) {
 	if (numero1 != "" && operatore == "") {
