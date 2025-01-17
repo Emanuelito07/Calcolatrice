@@ -3,7 +3,7 @@ let schermo = document.getElementById("schermo");
 let finecalcolo = false;
 
 function numeribottoni(s) {
-	if (schermo.value === "Errore") {				
+	if (schermo.value == "Errore") {
 		schermo.value = "";
 	};
 
@@ -15,12 +15,26 @@ function numeribottoni(s) {
 	let ultimoCarattere = schermo.value.slice(-1);
 	let operatori = ['+', '-', 'x', '÷'];           //variabile operatori
 
+	if (s == '-' && schermo.value.length == 0) {
+        schermo.value += s;  // Aggiungi il segno negativo come primo carattere
+        console.log(schermo.value);
+        return;
+    }
+
+    if ((s == '*' || s == '/') && schermo.value.length == 0) {
+        return;
+    }
+
 	if (operatori.includes(ultimoCarattere) && operatori.includes(s)) {
 		return;
 	};
 
-	schermo.value += s;          //aggiungere numeri e operatori
-	console.log(schermo.value);
+	if ((s == "*" || s == "/") && (s == "+" || s =="-")) {
+		finecalcolo = true;
+	} else {
+		schermo.value += s;          			//aggiungere numeri e operatori
+		console.log(schermo.value);
+	}
 };
 
 function reset() {
@@ -30,16 +44,54 @@ function reset() {
 };
 
 function calcolo() {
-	let espressione = schermo.value.replace(/x/g, '*').replace(/÷/g, '/');
+	let exp = schermo.value.split(/([\+\-\*\/])/);
+	console.log(exp)              // variabile array esp[20 - 10 * 1]
 
-	try {
-		schermo.value = eval(espressione);
-		console.log(schermo.value);
-        finecalcolo = true;
-	} catch {
-		schermo.value = "Errore";
-		console.log(schermo.value);
-	};
+	for (let i = 0; i < exp.length; i++) {
+		let risultato = "";
+		if (exp[i] == "*" || exp[i] == "/"){
+			let numero1 = parseFloat(exp[i-1])
+			let numero2 = parseFloat(exp[i+1])
+			if (exp[i] == "*") {
+				risultato = numero1 * numero2;
+			} else if (numero2 == 0) {
+				risultato = "Errore";
+				schermo.value = risultato;
+				return;
+			} else {
+				risultato = numero1 / numero2;
+			}
+			exp.splice(i - 1, 3, risultato); 					//eliminare gli elementi in posizione i e i +1
+			i--;				//fare in modo che i diminuisca di 1
+		}
+	}
+	
+	if (exp[0] == "" && exp[1] == "-") {
+		exp[2] = "-" + exp[2];
+		exp.splice(0, 2);
+	}
+
+	if (exp[0] == "" && exp[1] == "+") {
+		exp[2] = "+" + exp[2];
+		exp.splice(0, 2);
+	}
+
+    for (let i = 0; i < exp.length; i++) {
+        let risultato = "";
+        if (exp[i] == "+" || exp[i] == "-") {
+            let numero1 = parseFloat(exp[i-1]);
+            let numero2 = parseFloat(exp[i+1]);
+			if (exp[i] == "+") {
+				risultato = numero1 + numero2;
+			} else {
+				risultato = numero1 - numero2;
+			}
+            exp.splice(i - 1, 3, risultato);  // Rimuove i due numeri e l'operatore
+            i--;
+        }
+    }
+	schermo.value = exp;
+	console.log(exp);
 };
 /*
 let numero1 = "";

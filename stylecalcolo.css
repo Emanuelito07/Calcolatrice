@@ -49,7 +49,6 @@ button {
 /* output della calcolatrice */
 #schermo {
   width: 590px;
-  border: none;
   font-size: 70px;
   padding: 5px;
   text-align: left;
