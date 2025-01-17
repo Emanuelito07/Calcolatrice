@@ -1,5 +1,4 @@
 let schermo = document.getElementById("schermo");
-
 let finecalcolo = false;
 
 function numeribottoni(s) {
@@ -15,26 +14,22 @@ function numeribottoni(s) {
 	let ultimoCarattere = schermo.value.slice(-1);
 	let operatori = ['+', '-', 'x', '÷'];           //variabile operatori
 
-	if (s == '-' && schermo.value.length == 0) {
+    if (s == '-' && schermo.value.length == 0) {
         schermo.value += s;  // Aggiungi il segno negativo come primo carattere
         console.log(schermo.value);
         return;
     }
-
-    if ((s == '*' || s == '/') && schermo.value.length == 0) {
+	
+    if ((s == 'x' || s == '÷') && schermo.value.length == 0) {
         return;
     }
 
 	if (operatori.includes(ultimoCarattere) && operatori.includes(s)) {
 		return;
-	};
-
-	if ((s == "*" || s == "/") && (s == "+" || s =="-")) {
-		finecalcolo = true;
-	} else {
+	}	
+	
 		schermo.value += s;          			//aggiungere numeri e operatori
 		console.log(schermo.value);
-	}
 };
 
 function reset() {
@@ -44,15 +39,25 @@ function reset() {
 };
 
 function calcolo() {
-	let exp = schermo.value.split(/([\+\-\*\/])/);
+	let exp = schermo.value.split(/([\+\-\x\÷])/);
 	console.log(exp)              // variabile array esp[20 - 10 * 1]
+
+		if (exp[0] == "" && exp[1] == "-") {
+		exp[2] = "-" + exp[2];
+		exp.splice(0, 2);
+	}
+
+	if (exp[0] == "" && exp[1] == "+") {
+		exp[2] = "+" + exp[2];
+		exp.splice(0, 2);
+	}
 
 	for (let i = 0; i < exp.length; i++) {
 		let risultato = "";
-		if (exp[i] == "*" || exp[i] == "/"){
+		if (exp[i] == "x" || exp[i] == "÷"){
 			let numero1 = parseFloat(exp[i-1])
 			let numero2 = parseFloat(exp[i+1])
-			if (exp[i] == "*") {
+			if (exp[i] == "x") {
 				risultato = numero1 * numero2;
 			} else if (numero2 == 0) {
 				risultato = "Errore";
@@ -64,16 +69,6 @@ function calcolo() {
 			exp.splice(i - 1, 3, risultato); 					//eliminare gli elementi in posizione i e i +1
 			i--;				//fare in modo che i diminuisca di 1
 		}
-	}
-	
-	if (exp[0] == "" && exp[1] == "-") {
-		exp[2] = "-" + exp[2];
-		exp.splice(0, 2);
-	}
-
-	if (exp[0] == "" && exp[1] == "+") {
-		exp[2] = "+" + exp[2];
-		exp.splice(0, 2);
 	}
 
     for (let i = 0; i < exp.length; i++) {
