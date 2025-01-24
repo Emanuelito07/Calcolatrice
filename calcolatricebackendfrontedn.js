@@ -1,111 +1,115 @@
 let schermo = document.getElementById("schermo");
 
-let finecalcolo = false;
-
 function numeribottoni(s) {
-	if (schermo.value === "Errore") {				
-		schermo.value = "";
-	};
 
-    if (finecalcolo == true) {
+    if (schermo.value == "Err0r3") {
         schermo.value = "";
-        finecalcolo = false;
+    };
+
+    let ultimoCarattere = schermo.value.slice(-1); // prende l'ultimo carattere dell'input
+    let operatori = ['+', 'x', '÷'];           // variabili per gli operatori
+	let operatori2 = ['-'];
+	let parentesi = ['(', ')'];
+
+    if ((s == 'x' || s == '÷') && schermo.value.length == 0) {
+        return;     // impedisce di mettere "x" o "÷" come primo carattere
     }
 
-	let ultimoCarattere = schermo.value.slice(-1);
-	let operatori = ['+', '-', 'x', '÷'];           //variabile operatori
+    // verifica se l'ultimo carattere è un operatore
+    if (operatori.includes(ultimoCarattere) && operatori.includes(s)) {
+        return;  // Impedisce l'inserimento di operatori consecutivi
+    }
 
-	if (operatori.includes(ultimoCarattere) && operatori.includes(s)) {
-		return;
-	};
+    // verifica se l'ultimo carattere è un operatore
+	if (operatori2.includes(ultimoCarattere) && operatori2.includes(s)) {
+		return;  // Impedisce l'inserimento di operatori consecutivi
+	}
 
-	schermo.value += s;          //aggiungere numeri e operatori
-	console.log(schermo.value);
+	// includes evita di aggiungere un secondo punto da pop che ha il compito di prendere
+	//l'ultimo numero creato dall'array
+    if (s == '.' && ultimoCarattere !== '.' && !schermo.value.split(/[\+\-\x\÷\(\)]/).pop().includes('.')) {
+        schermo.value += s;  // aggiunge il punto solo se non c'è già uno nel numero
+    } else if (s != '.') {
+        schermo.value += s;  // aggiunge tutti gli altri caratteri (numeri o operatori)
+    }
+    console.log(schermo.value);
+
+	if (schermo.value == '(') {
+		s = '(';
+		return parenz;
+	}
+}
+
+function parenz(pz) {
+	
 };
+
+function calcolo() {
+    let exp = schermo.value.split(/([\+\-\x\÷])/);
+    console.log(exp)  // variabile array exp[20 - 10 * 1]
+
+    for (let i = 0; i < exp.length; i++) {
+        if (exp[i] == "" && (exp[i - 1] == "+" || exp[i - 1] == "-" || exp[i - 1] == "x" || exp[i - 1] == "÷")) {
+            exp.splice(i - 1, 2);  // elimina l'operatore e il numero non valido
+        }
+    }
+
+    if (exp[0] == "" && (exp[1] == "-" || exp[1] == "+")) {
+        exp[2] = exp[1] + exp[2];  // gestisce il caso in cui c'è un operatore iniziale
+        exp.splice(0, 2);
+    }
+
+	if ((exp[2] == "") && (exp[1] == "x" || exp[1] == "÷" )) {
+        exp[2] = exp[1] + exp[i + 2];  // gestisce il caso in cui c'è un operatore iniziale
+		exp.splice(i + 2, 0)
+    }
+
+    for (let i = 0; i < exp.length; i++) {
+        let risultato = "";
+        if (exp[i] == "x" || exp[i] == "÷") {
+            let numero1 = parseFloat(exp[i - 1]);
+            let numero2 = parseFloat(exp[i + 1]);
+            if (exp[i] == "x") {
+                risultato = numero1 * numero2;
+            } else if (numero2 == 0) {
+                risultato = "Err0r3";
+                schermo.value = risultato;
+                console.log(risultato);
+                return;
+            } else {
+                risultato = numero1 / numero2;
+            }
+            exp.splice(i - 1, 3, risultato);  // sostituisce l'operazione con il risultato
+            i--;  // decrimenta i per ripetere il ciclo con il risultato aggiornato
+        }
+    }
+
+    for (let i = 0; i < exp.length; i++) {
+        let risultato = "";
+        if (exp[i] == "+" || exp[i] == "-") {
+            let numero1 = parseFloat(exp[i - 1]);
+            let numero2 = parseFloat(exp[i + 1]);
+            if (exp[i] == "+") {
+                risultato = numero1 + numero2;
+            } else {
+                risultato = numero1 - numero2;
+            }
+            exp.splice(i - 1, 3, risultato);  // sostituisce l'operazione con il risultato
+            i--;  // decrimenta i per ripetere il ciclo con il risultato aggiornato
+        }
+    }
+    schermo.value = exp[0];  // mostra il risultato finale
+    console.log(exp);
+}
 
 function reset() {
-        schermo.value = "";
-        finecalcolo = false;
-	    console.log('Reset completato');
-};
+    schermo.value = "";
+    console.log('Reset completato');
+}
 
-function calcolo() {
-	let espressione = schermo.value.replace(/x/g, '*').replace(/÷/g, '/');
-
-	try {
-		schermo.value = eval(espressione);
-		console.log(schermo.value);
-        finecalcolo = true;
-	} catch {
-		schermo.value = "Errore";
-		console.log(schermo.value);
-	};
-};
-/*
-let numero1 = "";
-let numero2 = "";
-let operatore = "";
-let schermo = document.getElementById("schermo");
-
-//numero1 numero2
-function numeribottoni(numero) {
-    if (operatore == "") {
-        numero1 += numero;
-        schermo.value = numero1;
-    } else {
-        numero2 += numero;
-        schermo.value = numero1 + " " + operatore + " " + numero2;
+function retro() {
+    if (schermo.value.length > 0) {
+        schermo.value = schermo.value.slice(0, -1);  // rimuove l'ultimo carattere
     }
+    console.log(schermo.value);
 }
-				
-//funzione per aggiudicare l'operazione  
-function operazione(simboli) {
-	if (numero1 != "" && operatore == "") {
-		operatore = simboli;
-		schermo.value = numero1 + " " + operatore + " ";
-		console.log('Hai generato il simbolo ' + simboli);
-	}
-}
-
-//funzione per fare il calcolo
-function calcolo() {
-	if (numero1 != "" && numero2 != "" && operatore != "") {
-		numero1 = parseInt(numero1);	
-		numero2 = parseInt(numero2);
-		let prodotto = "";
-		switch (operatore) {
-			case '+':
-				prodotto = numero1 + numero2;
-				break;
-			case '-':
-				prodotto = numero1 - numero2;
-				break;
-			case 'x':
-				prodotto = numero1 * numero2;
-				break;
-			case '÷':
-				if (numero2 != 0) {
-					prodotto = numero1 / numero2;
-				} else {
-					console.log("Impossibile dividere per 0");
-          			schermo.value = "Errore:";
-          			return;
-				}
-		}
-		console.log(`Il risultato è... ${numero1} ${operatore} ${numero2} = ${prodotto}`);
-		schermo.value = prodotto;
-		numero1 = "";
-        numero2 = "";
-        operatore = "";
-	}
-};
-
-//reset
-function reset(restart) {
-	numero1 = "";
-	numero2 = "";
-	operatore = "";
-	console.log('Calcolatrice resettata!')
-	schermo.value = "";
-}
-*/

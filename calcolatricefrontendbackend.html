@@ -1,53 +1,57 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Calcolatrice!</title>
-    <link rel="stylesheet" href="stylecalcolo.css">
-  </head>
-  <body>
-    <div id="h1-inizio">
-      <h1>Questa è la calcolatrice di Emanuele!</h1>
-    </div>
+<head>
+  <title>Calcolatrice!</title>
+  <link rel="stylesheet" href="stylecalcolo.css">
+</head>
 
-    <div id="paragrafo-calcolatrice">
-			  <!--Input per vedere a schermo i numeri-->
-      <input
-	      type="text"
-	      id="schermo" 
-	      disabled
-	    />
-    </div>
+<body>
+  <div id="h1-inizio">
+    <h1>Questa è la calcolatrice di Emanuele!</h1>
+  </div>
 
-    <div class="due-bottoni">
-      <button class="numeribottoni" onclick="numeribottoni('7')">7</button>
-      <button class="numeribottoni" onclick="numeribottoni('8')">8</button>
-      <button class="numeribottoni" onclick="numeribottoni('9')">9</button>
-      <button class="operazione"    onclick="numeribottoni('÷')">÷</button>
-    </div>
+  <div id="paragrafo-calcolatrice">
+    <!--Input per vedere a schermo i numeri-->
+    <input type="text" id="schermo" disabled />
+  </div>
 
-    <div class="due-bottoni">
-      <button class="numeribottoni" onclick="numeribottoni('4')">4</button>
-      <button class="numeribottoni" onclick="numeribottoni('5')">5</button>
-      <button class="numeribottoni" onclick="numeribottoni('6')">6</button>
-	  <button class="operazione"      onclick="numeribottoni('x')">x</button>
-    </div>
+  <div class="due-bottoni">
+    <button class="extra" onclick="numeribottoni('(')">(</button>
+    <button class="extra" onclick="numeribottoni(')')">)</button>
+    <button class="extra" onclick="numeribottoni('.')">.</button>
+    <button class="extra" onclick="retro('←')"        >←</button>
+  </div>
 
-    <div class="due-bottoni">
-      <button class="numeribottoni" onclick="numeribottoni('1')">1</button>
-      <button class="numeribottoni" onclick="numeribottoni('2')">2</button>
-      <button class="numeribottoni" onclick="numeribottoni('3')">3</button>
-      <button class="operazione"    onclick="numeribottoni('-')">-</button>
-    </div>
+  <div class="due-bottoni">
+    <button class="numeribottoni" onclick="numeribottoni('7')">7</button>
+    <button class="numeribottoni" onclick="numeribottoni('8')">8</button>
+    <button class="numeribottoni" onclick="numeribottoni('9')">9</button>
+    <button class="operazione"    onclick="numeribottoni('÷')">÷</button>
+  </div>
 
-    <div class="due-bottoni">
-      <button class="reset"         onclick="reset()"           >C</button>
-      <button class="numeribottoni" onclick="numeribottoni('0')">0</button>
-      <button class="operazione"    onclick="calcolo()"         >=</button>
-      <button class="operazione"    onclick="numeribottoni('+')">+</button>
-    </div>
+  <div class="due-bottoni">
+    <button class="numeribottoni" onclick="numeribottoni('4')">4</button>
+    <button class="numeribottoni" onclick="numeribottoni('5')">5</button>
+    <button class="numeribottoni" onclick="numeribottoni('6')">6</button>
+    <button class="operazione"    onclick="numeribottoni('x')">x</button>
+  </div>
 
-    <script src="calcolatricebackendfrontedn.js"></script>
-  </body>
+  <div class="due-bottoni">
+    <button class="numeribottoni" onclick="numeribottoni('1')">1</button>
+    <button class="numeribottoni" onclick="numeribottoni('2')">2</button>
+    <button class="numeribottoni" onclick="numeribottoni('3')">3</button>
+    <button class="operazione"    onclick="numeribottoni('-')">-</button>
+  </div>
+
+  <div class="due-bottoni">
+    <button class="extra"         onclick="reset()"           >C</button>
+    <button class="numeribottoni" onclick="numeribottoni('0')">0</button>
+    <button class="calcolo"       onclick="calcolo()"         >=</button>
+    <button class="operazione"    onclick="numeribottoni('+')">+</button>
+  </div>
+
+  <script src="calcolatricebackendfrontedn.js"></script>
+</body>
 </html>
 <!--<!DOCTYPE html>
 <html>
