@@ -7,9 +7,7 @@ function numeribottoni(s) {
     };
 
     let ultimoCarattere = schermo.value.slice(-1); // prende l'ultimo carattere dell'input
-    let operatori = ['+', 'x', '÷'];           // variabili per gli operatori
-	let operatori2 = ['-'];
-	let parentesi = ['(', ')'];
+    let operatori = ['-', '+', 'x', '÷'];           // variabili per gli operatori
 
     if ((s == 'x' || s == '÷') && schermo.value.length == 0) {
         return;     // impedisce di mettere "x" o "÷" come primo carattere
@@ -20,48 +18,23 @@ function numeribottoni(s) {
         return;  // Impedisce l'inserimento di operatori consecutivi
     }
 
-    // verifica se l'ultimo carattere è un operatore
-	if (operatori2.includes(ultimoCarattere) && operatori2.includes(s)) {
-		return;  // Impedisce l'inserimento di operatori consecutivi
-	}
-
-	// includes evita di aggiungere un secondo punto da pop che ha il compito di prendere
-	//l'ultimo numero creato dall'array
-    if (s == '.' && ultimoCarattere !== '.' && !schermo.value.split(/[\+\-\x\÷\(\)]/).pop().includes('.')) {
+    // includes evita di aggiungere un secondo punto da pop che ha il compito di prendere
+    //l'ultimo numero creato dall'array
+    if (s == '.' && !schermo.value.split(/[\+\-\x\÷]/).pop().includes('.')) {
         schermo.value += s;  // aggiunge il punto solo se non c'è già uno nel numero
     } else if (s != '.') {
         schermo.value += s;  // aggiunge tutti gli altri caratteri (numeri o operatori)
     }
     console.log(schermo.value);
-
-	if (schermo.value == '(') {
-		s = '(';
-		return parenz;
-	}
 }
-
-function parenz(pz) {
-	
-};
 
 function calcolo() {
     let exp = schermo.value.split(/([\+\-\x\÷])/);
     console.log(exp)  // variabile array exp[20 - 10 * 1]
 
-    for (let i = 0; i < exp.length; i++) {
-        if (exp[i] == "" && (exp[i - 1] == "+" || exp[i - 1] == "-" || exp[i - 1] == "x" || exp[i - 1] == "÷")) {
-            exp.splice(i - 1, 2);  // elimina l'operatore e il numero non valido
-        }
-    }
-
     if (exp[0] == "" && (exp[1] == "-" || exp[1] == "+")) {
         exp[2] = exp[1] + exp[2];  // gestisce il caso in cui c'è un operatore iniziale
         exp.splice(0, 2);
-    }
-
-	if ((exp[2] == "") && (exp[1] == "x" || exp[1] == "÷" )) {
-        exp[2] = exp[1] + exp[i + 2];  // gestisce il caso in cui c'è un operatore iniziale
-		exp.splice(i + 2, 0)
     }
 
     for (let i = 0; i < exp.length; i++) {
@@ -80,7 +53,7 @@ function calcolo() {
                 risultato = numero1 / numero2;
             }
             exp.splice(i - 1, 3, risultato);  // sostituisce l'operazione con il risultato
-            i--;  // decrimenta i per ripetere il ciclo con il risultato aggiornato
+            i--;  // diminuiamo i per ripetere il ciclo con il risultato aggiornato
         }
     }
 
@@ -98,8 +71,9 @@ function calcolo() {
             i--;  // decrimenta i per ripetere il ciclo con il risultato aggiornato
         }
     }
-    schermo.value = exp[0];  // mostra il risultato finale
+    schermo.value = parseFloat(exp[0]).toFixed(3); // arrotondare a 5 cifre decimali
     console.log(exp);
+    schermo.value = parseFloat(schermo.value);
 }
 
 function reset() {
