@@ -8,16 +8,16 @@ function numeribottoni(numeri) {
 
     let ultimoCarattere = schermo.value.slice(-1);          // prende l'ultimo carattere dell'input
 
-    if ((numeri == '/' && schermo.value.length == 0) || (numeri == 'x' && schermo.value.length == 0)) {
+    if ((numeri == '÷' && schermo.value.length == 0) || (numeri == 'x' && schermo.value.length == 0)) {
         return;     // impedisce di mettere "x" o "÷" come primo carattere
     };
 
     // dopo aver messo l'opratore non puoi aggiungerlo un'altro per questo motivo non puoi aggiungere piu di un opratore alla volta
-    if ((ultimoCarattere == '-' || ultimoCarattere == '/' || ultimoCarattere == 'x' || ultimoCarattere == '+') && (numeri == '-' || numeri == '/' || numeri == 'x' || numeri == '+')) {
+    if ((ultimoCarattere == '-' || ultimoCarattere == '÷' || ultimoCarattere == 'x' || ultimoCarattere == '+') && (numeri == '-' || numeri == '÷' || numeri == 'x' || numeri == '+')) {
         return;
     }
 
-    if (ultimoCarattere == '(' && (numeri == '/' || numeri == 'x' || numeri == '+')) {
+    if (ultimoCarattere == '(' && (numeri == '÷' || numeri == 'x' || numeri == '+')) {
         return;
     }
 
@@ -37,7 +37,7 @@ function numeribottoni(numeri) {
         schermo.value += ')';
         schermo.value += 'x';
     } else if (numeri == '.') {
-        let PezziOperatori = schermo.value.split(/[+\-x/]/);
+        let PezziOperatori = schermo.value.split(/[+\-x÷]/);
         let UltimoNumero = PezziOperatori[PezziOperatori.length -1];
         if (!UltimoNumero.includes('.')) {
             schermo.value += numeri;
@@ -71,11 +71,11 @@ function calcolo() {
 }
 
 function GestioneCalcolo(espressione) {
-    let array1 = espressione.split(/([+\-x/])/);
+    let array1 = espressione.split(/([+\-x÷])/);
     console.log(array1)  // variabile array espressione[20 - 10 * 1]
 
     for (let i = 0; i < array1.length; i++) {
-        if (array1[i] == "" && (array1[i - 1] == "/" || array1[i - 1] == "x" || array1[i - 1] == "-" || array1[i - 1] == "+")) {
+        if (array1[i] == "" && (array1[i - 1] == "÷" || array1[i - 1] == "x" || array1[i - 1] == "-" || array1[i - 1] == "+")) {
             array1.splice(i - 1, 2); // elimina l'operatore e il numero non valido
         }
         if (array1[0] == "" && (array1[1] == "-" || array1[1] == "+")) {
@@ -85,7 +85,7 @@ function GestioneCalcolo(espressione) {
     }
 
     for (let i = 0; i < array1.length; i++) {
-        if (array1[i] == "x" || array1[i] == "/") {
+        if (array1[i] == "x" || array1[i] == "÷") {
             let numero1 = parseFloat(array1[i - 1]);
             let numero2 = parseFloat(array1[i + 1]);
             let risultato = "";
